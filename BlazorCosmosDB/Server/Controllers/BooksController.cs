@@ -13,39 +13,39 @@ namespace BlazorCosmosDB.Server.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        readonly ICosmosService<Book> _service;
+        readonly ICosmosService<Book> _cosmos;
 
         public BooksController(ICosmosService<Book> cosmosDbService)
         {
-            _service = cosmosDbService;
+            _cosmos = cosmosDbService;
         }
 
         // GET: api/<Books>
         [HttpGet]
         public async Task<IEnumerable<Book>> Get()
         {
-            return await _service.GetItemsAsync("SELECT * FROM c");
+            return await _cosmos.GetItemsAsync("SELECT * FROM c");
         }
 
         // GET api/<Books>/ISBN/Partition
         [HttpGet("{id}/{partition}")]
         public async Task<Book> Get(string id, string partition = Utils.DEFAULT_PARTITION)
         {
-            return await _service.GetItemAsync(id, partition);
+            return await _cosmos.GetItemAsync(id, partition);
         }
 
         // POST api/<Books>
         [HttpPost]
         public async Task<bool> Post([FromBody] Book item)
         {
-            return await _service.AddItemAsync(item);
+            return await _cosmos.AddItemAsync(item);
         }
 
         // PUT api/<Books>/5
         [HttpPut("{id}")]
         public async Task<bool> Put(string id, [FromBody] Book item)
         {
-            return await _service.UpdateItemAsync(id, item);
+            return await _cosmos.UpdateItemAsync(id, item);
         }
 
         // DELETE api/<Books>/id/partition
@@ -53,14 +53,14 @@ namespace BlazorCosmosDB.Server.Controllers
         [HttpDelete("{id}/{partition}")]
         public async Task<bool> Delete(string id, string partition = Utils.DEFAULT_PARTITION)
         {
-            return await _service.DeleteItemAsync(id, partition);
+            return await _cosmos.DeleteItemAsync(id, partition);
         }
 
         // Custom method
         [HttpGet("SeedData")]
         public async Task<IEnumerable<Book>> GetSeedData()
         {
-            return await SeedData.GetBooksData(_service);
+            return await SeedData.GetBooksData(_cosmos);
         }
 
     }

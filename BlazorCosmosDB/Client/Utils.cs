@@ -12,15 +12,6 @@ namespace BlazorCosmosDB.Client
 {
     public static class Utils
     {
-        public static async Task<bool> ResponseResult(HttpResponseMessage response)
-        {
-            if (response.StatusCode == HttpStatusCode.OK) {
-                var js = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<bool>(js);
-            }
-            return false;
-        }
-
         static readonly Random random = new Random();
         public static string RandomString(int length, bool numbers = true)
         {
@@ -45,7 +36,13 @@ namespace BlazorCosmosDB.Client
             return $"{RandomString(1)}-{RandomString(5, false)}-{RandomString(3)}-{RandomString(1)}";
         }
 
+        public static async Task<bool> ResponseResult(HttpResponseMessage response)
+        {
+            if (response.StatusCode == HttpStatusCode.OK) {
+                var js = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<bool>(js);
+            }
+            return false;
+        }
     }
-
-
 }

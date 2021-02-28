@@ -12,7 +12,6 @@ namespace BlazorCosmosDB.Server.Services
         /// <summary>
         /// Creates a Cosmos database and a container with the specified partition key. 
         /// </summary>
-        /// <returns></returns>
         public static async Task<CosmosService<T>> Initialize<T>(IConfiguration configuration)
         {
             var settings = configuration.GetSection("CosmosDbEmulator").Get<CosmosSettings>();

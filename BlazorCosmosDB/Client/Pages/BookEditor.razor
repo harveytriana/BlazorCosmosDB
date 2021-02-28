@@ -12,7 +12,7 @@
     protected override async Task OnInitializedAsync()
     {
         if (id != null) {// update, PUT operation
-            item = await _http.GetFromJsonAsync<Book>($"{apiRoot}{id}");
+            item = await _http.GetFromJsonAsync<Book>($"{apiRoot}{id}/CO");
         }
     }
 

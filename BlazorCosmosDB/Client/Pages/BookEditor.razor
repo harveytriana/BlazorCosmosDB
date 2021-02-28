@@ -1,9 +1,10 @@
-﻿@page "/BookEditor/{id}"
+﻿@page "/BookEditor"
+@page "/BookEditor/{id}/{partition}"
 @inject NavigationManager _navigation
 @inject HttpClient _http
 @code {
-    [Parameter]
-    public string id { get; set; }
+    [Parameter] public string id { get; set; }
+    [Parameter] public string partition { get; set; }
 
     Book item = new Book();
     string apiRoot = "api/books/";
@@ -12,7 +13,7 @@
     protected override async Task OnInitializedAsync()
     {
         if (id != null) {// update, PUT operation
-            item = await _http.GetFromJsonAsync<Book>($"{apiRoot}{id}/CO");
+            item = await _http.GetFromJsonAsync<Book>($"{apiRoot}{id}/{partition}");
         }
     }
 

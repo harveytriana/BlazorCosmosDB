@@ -35,7 +35,7 @@ else {
                     </td>
                     <td nowrap>
                         <span style="cursor:pointer;color:goldenrod"
-                              @onclick="@(e => OnEdit(i.ISBN))" class="oi oi-pencil"></span>
+                              @onclick="@(e => OnEdit(i.ISBN, i.Partition))" class="oi oi-pencil"></span>
                         <span style="cursor:pointer;color:salmon"
                               @onclick="@(e => OnDelete(i.ISBN))" class="oi oi-trash"></span>
                     </td>
@@ -54,9 +54,9 @@ else {
 }
 
 @code {
-    List<Book> items;
-    string apiRoot = "api/books/";
-    string echo;
+        List<Book> items;
+        string apiRoot = "api/books/";
+        string echo;
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,9 +69,13 @@ else {
         }
     }
 
-    void OnEdit(string id) => _navigation.NavigateTo($"BookEditor/{id}");
+    void OnEdit(string id, string partition) {
+        _navigation.NavigateTo($"BookEditor/{id}/{partition}");
+    }
 
-    void OnCreate() => _navigation.NavigateTo($"BookEditor/");
+    void OnCreate() {
+        _navigation.NavigateTo($"BookEditor/");
+    }
 
     async Task OnDelete(string id)
     {

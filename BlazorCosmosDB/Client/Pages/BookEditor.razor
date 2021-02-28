@@ -2,11 +2,20 @@
 @page "/BookEditor/{id}/{partition}"
 @inject NavigationManager _navigation
 @inject HttpClient _http
+@inject IJSRuntime _jr;
 
 <h3 style="color:darkgoldenrod">Book Editor</h3>
 <hr />
-<EditForm Model="@item">
+<div spellcheck="false">
     <table class="table table-borderless">
+        <tr>
+            <td class="td-label">ISBN</td>
+            <td>
+                <input class="form-control" type="text" maxlength="14"
+                       readonly="readonly"
+                       @bind="item.ISBN" placeholder="Leave empty for random" />
+            </td>
+        </tr>
         <tr>
             <td class="td-label">Title</td>
             <td>
@@ -19,13 +28,6 @@
             <td>
                 <input class="form-control" type="text" maxlength="50"
                        @bind="item.Author" />
-            </td>
-        </tr>
-        <tr>
-            <td class="td-label">ISBN</td>
-            <td>
-                <input class="form-control" type="text" maxlength="14"
-                       @bind="item.ISBN" placeholder="Leave empty for random" />
             </td>
         </tr>
         <tr>
@@ -45,44 +47,47 @@
         <tr>
             <td colspan="2">
                 <br />
-                <input class="btn btn-primary" type="submit" value="Update" @onclick="Save" />
+                <input class="btn btn-primary" type="button" value="Update" @onclick="Save" />
                 <input class="btn btn-danger" type="button" value="Cancel" @onclick="Cancel" />
             </td>
         </tr>
     </table>
-</EditForm>
-
-<p class="alert-info">@echo</p>
+</div>
+<hr />
+<h5>@echo</h5>
 
 @code {
     [Parameter] public string id { get; set; }
     [Parameter] public string partition { get; set; }
 
     Book item = new Book();
-    string apiRoot = "api/books/";
     string echo;
+
+    bool isEdit => !string.IsNullOrEmpty(id);
 
     protected override async Task OnInitializedAsync()
     {
-        if (id != null) {// update, PUT operation
-            item = await _http.GetFromJsonAsync<Book>($"{apiRoot}{id}/{partition}");
+        if (isEdit) {// update, PUT operation
+            item = await _http.GetFromJsonAsync<Book>($"api/books/{id}/{partition}");
         }
+        else {
+            item.ISBN = Utils.NewISBN();
+        }
+        echo = "READY";
     }
 
     protected async Task Save()
     {
         HttpResponseMessage response;
-        if (id == null) {
-            if (item.ISBN == null) {// scape
-                item.ISBN = Utils.NewISBN();
-            }
-            response = await _http.PostAsJsonAsync($"{apiRoot}", item);
+        if (isEdit) {
+            response = await _http.PutAsJsonAsync($"api/books/{id}", item);
         }
         else {
-            response = await _http.PutAsJsonAsync($"{apiRoot}", item);
+            response = await _http.PostAsJsonAsync($"api/books/", item);
         }
-        if (await Utils.ResponseResult(response)) {
+        if (await Utils.ResponseResult(response) == true) {
             _navigation.NavigateTo("/Books");
+            echo = "READY";
         }
         else {
             echo = "The operation was not completed";
@@ -90,4 +95,5 @@
     }
 
     protected void Cancel() => _navigation.NavigateTo("/Books");
+
 }

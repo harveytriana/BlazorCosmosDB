@@ -17,7 +17,7 @@ else {
                 <td>Language</td>
                 <td>Year</td>
                 <td>Link</td>
-                <td></td>
+                <td>Action</td>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@ else {
                     <td>@b.Language</td>
                     <td>@b.Year</td>
                     <td>
-                        <span style="cursor:pointer;color:@LinkColor(b.Link);"
+                        <span style="@LinkStyle(b.Link);"
                               @onclick="() => OpenLink(b.Link)">Moore...</span>
                     </td>
                     <td nowrap>
@@ -91,7 +91,11 @@ else {
         }
     }
 
-    string LinkColor(string link) => string.IsNullOrEmpty(link) ? "gray" : "darkgoldenrod";
+    string LinkStyle(string link)
+    {
+        if (string.IsNullOrEmpty(link)) return "gray;";
+        return "cursor:pointer;color:darkgoldenrod;";
+    }
 
     async Task SeedData()
     {

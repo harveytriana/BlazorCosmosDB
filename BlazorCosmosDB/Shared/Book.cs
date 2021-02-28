@@ -2,6 +2,7 @@
 // Blog BlazorSpread
 // @__harveyt__
 // ******************************
+using Newtonsoft.Json;
 using System.Text.Json.Serialization;
 
 namespace BlazorCosmosDB.Shared
@@ -9,7 +10,9 @@ namespace BlazorCosmosDB.Shared
     public class Book
     {
         // CosmosDB requires id in container 
+        // CosmosDB uses Newtonsoft
         [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public string ISBN { get; set; }
 
         [JsonPropertyName("author")]
@@ -26,6 +29,9 @@ namespace BlazorCosmosDB.Shared
 
         [JsonPropertyName("year")]
         public int Year { get; set; }
+
+        // ** PartitionKey: automated setting the server country 
+        public string Partition { get; set; }
 
         public override string ToString() => $"{Title}, {Author}";
     }

@@ -10,6 +10,8 @@ namespace BlazorCosmosDB.Server
 {
     public class Startup
     {
+        public static string PATH { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,6 +31,8 @@ namespace BlazorCosmosDB.Server
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            PATH = env.ContentRootPath;
+
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();

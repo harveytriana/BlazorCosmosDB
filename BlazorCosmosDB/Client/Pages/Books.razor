@@ -6,7 +6,7 @@
 <h1 style="color:darkgoldenrod">Art Gallery</h1>
 <h3><span class="oi oi-book"></span> Books</h3>
 @if (items == null) {
-    <p>@echo</p>
+    <h6>@echo</h6>
 }
 else {
     <table class="table">
@@ -30,9 +30,8 @@ else {
                     <td>@i.Language</td>
                     <td>@i.Year</td>
                     <td>
-                        @i.Link
                         <span style="cursor:pointer;color:@LinkColor(i.Link);"
-                              @onclick="() => Go(i.Link)">Moore...</span>
+                              @onclick="() => OpenLink(i.Link)">Moore...</span>
                     </td>
                     <td nowrap>
                         <span style="cursor:pointer;color:goldenrod"
@@ -44,15 +43,20 @@ else {
             }
         </tbody>
     </table>
+    if (items.Count == 0) {
+        <h6 style="cursor:pointer;color:goldenrod"
+            @onclick="@SeedData" class="oi oi-pencil">
+            Add Data Sample
+        </h6>
+    }
     <hr />
-    <a href="BookEditor" style="font-size:16px;">Add Book</a><span> | </span>
-    <a href="BookSeed" style="font-size:16px;">Insert Sample Data</a>
+    <a href="BookEditor" style="font-size:16px;">Add Book</a>
 }
 
 @code {
-        List<Book> items;
-        string apiRoot = "api/books/";
-        string echo;
+    List<Book> items;
+    string apiRoot = "api/books/";
+    string echo;
 
     protected override async Task OnInitializedAsync()
     {
@@ -76,12 +80,23 @@ else {
         await _http.DeleteAsync($"api/book/{id}");
     }
 
-    async Task Go(string link)
+    async Task OpenLink(string link)
     {
         if (string.IsNullOrEmpty(link) == false) {
             await _jsRuntime.InvokeVoidAsync("open", link, "_blank");
-        } 
+        }
     }
 
-    string LinkColor(string link) => link == null ? "gray" : "darkgoldenrod";
+    string LinkColor(string link) => string.IsNullOrEmpty(link) ? "gray" : "darkgoldenrod";
+
+    async Task SeedData()
+    {
+        echo = "Queryinhg database...";
+        try {
+            items = await _http.GetFromJsonAsync<List<Book>>(apiRoot + "SeedData");
+        }
+        catch (Exception exception) {
+            echo = "Exception: " + exception.Message;
+        }
+    }
 }

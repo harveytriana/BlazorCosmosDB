@@ -12,11 +12,11 @@ namespace BlazorCosmosDB.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Books : ControllerBase
+    public class BooksController : ControllerBase
     {
         readonly ICosmosService<Book> _service;
 
-        public Books(ICosmosService<Book> cosmosDbService)
+        public BooksController(ICosmosService<Book> cosmosDbService)
         {
             _service = cosmosDbService;
         }
@@ -56,5 +56,13 @@ namespace BlazorCosmosDB.Server.Controllers
         {
             return await _service.DeleteItemAsync(id, partition);
         }
+
+        // Custom method
+        [HttpGet("SeedData")]
+        public async Task<IEnumerable<Book>> GetSeedData()
+        {
+            return await SeedData.GetBooksData(_service);
+        }
+
     }
 }

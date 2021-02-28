@@ -1,10 +1,9 @@
-﻿@page "/BookEditor"
-@page "/BookEditor/{id:int}"
+﻿@page "/BookEditor/{id}"
 @inject NavigationManager _navigation
 @inject HttpClient _http
 @code {
     [Parameter]
-    public int id { get; set; }
+    public string id { get; set; }
 
     Book item = new Book();
     string apiRoot = "api/books/";
@@ -12,7 +11,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (id != 0) {// put
+        if (id != null) {// update, PUT operation
             item = await _http.GetFromJsonAsync<Book>($"{apiRoot}{id}");
         }
     }
@@ -20,9 +19,9 @@
     protected async Task Save()
     {
         HttpResponseMessage response;
-        if (id == 0) {
+        if (id == null) {
             if (item.ISBN == null) {// scape
-                item.ISBN =Utils.NewISBN();
+                item.ISBN = Utils.NewISBN();
             }
             response = await _http.PostAsJsonAsync($"{apiRoot}", item);
         }
@@ -37,10 +36,7 @@
         }
     }
 
-    protected void Cancel()
-    {
-        _navigation.NavigateTo("/Books");
-    }
+    protected void Cancel() => _navigation.NavigateTo("/Books");
 }
 
 <h1 style="color:darkgoldenrod">Art Gallery</h1>
@@ -50,22 +46,36 @@
         <tr>
             <td>Title</td>
             <td>
-                <input class="form-control col-sm-4" type="text" 
+                <input class="form-control col-sm-4" type="text" maxlength="200"
                        @bind="item.Title" />
             </td>
         </tr>
         <tr>
             <td>Author</td>
             <td>
-                <input class="form-control col-sm-4" type="text" 
+                <input class="form-control col-sm-4" type="text" maxlength="50"
                        @bind="item.Author" />
             </td>
         </tr>
         <tr>
             <td>ISBN</td>
             <td>
-                <input class="form-control col-sm-4" type="text" 
+                <input class="form-control col-sm-4" type="text" maxlength="14"
                        @bind="item.ISBN" placeholder="Leave empty for random" />
+            </td>
+        </tr>
+        <tr>
+            <td>Language</td>
+            <td>
+                <input class="form-control col-sm-4" type="text" maxlength="20"
+                       @bind="item.Language" placeholder="Set the book language" />
+            </td>
+        </tr>
+        <tr>
+            <td>Link</td>
+            <td>
+                <input class="form-control col-sm-4" type="text" maxlength="200"
+                       @bind="item.Link" placeholder="Link" />
             </td>
         </tr>
         <tr>

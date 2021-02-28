@@ -1,0 +1,77 @@
+﻿@page "/BookEditor"
+@page "/BookEditor/{id:int}"
+@inject NavigationManager _navigation
+@inject HttpClient _http
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    Book item = new Book();
+    string apiRoot = "api/books/";
+    string echo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id != 0) {// put
+            item = await _http.GetFromJsonAsync<Book>($"{apiRoot}{id}");
+        }
+    }
+
+    protected async Task Save()
+    {
+        HttpResponseMessage response;
+        if (id == 0) {
+            if (item.ISBN == null) {// scape
+                item.ISBN =Utils.NewISBN();
+            }
+            response = await _http.PostAsJsonAsync($"{apiRoot}", item);
+        }
+        else {
+            response = await _http.PutAsJsonAsync($"{apiRoot}", item);
+        }
+        if (await Utils.ResponseResult(response)) {
+            _navigation.NavigateTo("/Books");
+        }
+        else {
+            echo = "The operation was not completed";
+        }
+    }
+
+    protected void Cancel()
+    {
+        _navigation.NavigateTo("/Books");
+    }
+}
+
+<h1 style="color:darkgoldenrod">Art Gallery</h1>
+<h3><span class="oi oi-item"></span> Book Editor</h3>
+<EditForm Model="@item">
+    <table class="table">
+        <tr>
+            <td>Title</td>
+            <td>
+                <input class="form-control col-sm-4" type="text" @bind="item.Title" />
+            </td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td>
+                <input class="form-control col-sm-4" type="text" @bind="item.Author" />
+            </td>
+        </tr>
+        <tr>
+            <td>ISBN</td>
+            <td>
+                <input class="form-control col-sm-4" type="text" @bind="item.ISBN" placeholder="Leave empty for random" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br />
+                <input class="btn btn-primary" type="submit" value="Update" @onclick="Save" />
+                <input class="btn btn-danger" type="button" value="Cancel" @onclick="Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+<p class="alert-info">@echo</p>

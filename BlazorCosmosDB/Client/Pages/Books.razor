@@ -1,0 +1,73 @@
+﻿@page "/fetch-books"
+@inject HttpClient _http
+@inject NavigationManager _navigation
+
+<h1 style="color:darkgoldenrod">Art Gallery</h1>
+<h3><span class="oi oi-book"></span> Books</h3>
+@if (items == null) {
+    <p>@echo</p>
+}
+else {
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Title</td>
+                <td>Author</td>
+                <td>ISBN</td>
+                <td>Language</td>
+                <td>Year</td>
+                <td>Link</td>
+                <td></td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in items) {
+                <tr>
+                    <td>@i.Title</td>
+                    <td>@i.Author</td>
+                    <td>@i.ISBN</td>
+                    <td>@i.Language</td>
+                    <td>@i.Year</td>
+                    <td>@i.Link</td>
+                    <td nowrap>
+                        <span style="cursor:pointer;color:goldenrod" 
+                              @onclick="@(e => OnEdit(i.ISBN))" class="oi oi-pencil"></span>
+                        <span style="cursor:pointer;color:salmon" 
+                              @onclick="@(e => OnDelete(i.ISBN))" class="oi oi-trash"></span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <hr />
+    <a href="BookEditor" style="font-size:16px;">Add Book</a><span> | </span>
+    <a href="BookSeed" style="font-size:16px;">Insert Sample Data</a>
+}
+
+@code {
+    List<Book> items;
+    string apiRoot = "api/books/";
+    string echo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        echo = "Queryinhg database...";
+        try {
+            items = await _http.GetFromJsonAsync<List<Book>>(apiRoot);
+        }
+        catch (Exception exception) {
+            echo = "Exception: " + exception.Message;
+        }
+    }
+
+    void OnEdit(string id) => _navigation.NavigateTo($"BookEditor/{id}");
+
+    void OnCreate() => _navigation.NavigateTo($"BookEditor/");
+
+    async Task OnDelete(string id)
+    {
+        items.Remove(items.Find(x => x.ISBN == id));
+        // update database
+        await _http.DeleteAsync($"api/book/{id}");
+    }
+}

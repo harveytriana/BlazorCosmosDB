@@ -1,6 +1,5 @@
 ﻿// ******************************
-// Blog BlazorSpread
-// @__harveyt__
+// Article BlazorSpread
 // ******************************
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;

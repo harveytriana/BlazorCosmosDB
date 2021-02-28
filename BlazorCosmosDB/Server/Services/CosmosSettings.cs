@@ -1,6 +1,5 @@
 ﻿// ******************************
-// Axis Project
-// @__harveyt__
+// Article BlazorSpread
 // ******************************
 namespace BlazorCosmosDB.Server.Services
 {

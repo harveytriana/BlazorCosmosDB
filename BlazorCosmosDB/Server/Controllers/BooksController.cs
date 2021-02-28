@@ -1,6 +1,5 @@
 ﻿// ******************************
-// Axis Project
-// @__harveyt__
+// Article BlazorSpread
 // ******************************
 using BlazorCosmosDB.Server.Services;
 using BlazorCosmosDB.Shared;

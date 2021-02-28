@@ -1,4 +1,7 @@
-﻿using BlazorCosmosDB.Shared;
+﻿// ******************************
+// Article BlazorSpread
+// ******************************
+using BlazorCosmosDB.Shared;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;

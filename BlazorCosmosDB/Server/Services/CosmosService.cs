@@ -1,6 +1,5 @@
 ﻿// ******************************
-// Blog BlazorSpread
-// @__harveyt__
+// Article BlazorSpread
 // ******************************
 using System;
 using System.Collections.Generic;

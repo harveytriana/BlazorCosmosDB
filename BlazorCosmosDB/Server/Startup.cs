@@ -1,3 +1,6 @@
+// ******************************
+// Article BlazorSpread
+// ******************************
 using BlazorCosmosDB.Server.Services;
 using BlazorCosmosDB.Shared;
 using Microsoft.AspNetCore.Builder;
@@ -26,7 +29,7 @@ namespace BlazorCosmosDB.Server
 
             // cosmos db services
             services.AddSingleton<ICosmosService<Book>>(DatabaseInitializer.Initialize<Book>(Configuration).GetAwaiter().GetResult());
-            // other entities ...
+            // other entities has the same pattern, except the type..
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

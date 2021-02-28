@@ -1,6 +1,5 @@
 ﻿// ******************************
-// Blog BlazorSpread
-// @__harveyt__
+// Article BlazorSpread
 // ******************************
 using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.Configuration;

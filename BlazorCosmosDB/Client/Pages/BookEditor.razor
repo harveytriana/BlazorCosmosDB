@@ -2,6 +2,58 @@
 @page "/BookEditor/{id}/{partition}"
 @inject NavigationManager _navigation
 @inject HttpClient _http
+
+<h3 style="color:darkgoldenrod">Book Editor</h3>
+<hr />
+<EditForm Model="@item">
+    <table class="table table-borderless">
+        <tr>
+            <td class="td-label">Title</td>
+            <td>
+                <input class="form-control" type="text" maxlength="200"
+                       @bind="item.Title" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td-label">Author</td>
+            <td>
+                <input class="form-control" type="text" maxlength="50"
+                       @bind="item.Author" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td-label">ISBN</td>
+            <td>
+                <input class="form-control" type="text" maxlength="14"
+                       @bind="item.ISBN" placeholder="Leave empty for random" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td-label">Language</td>
+            <td>
+                <input class="form-control" type="text" maxlength="20"
+                       @bind="item.Language" placeholder="Set the book language" />
+            </td>
+        </tr>
+        <tr>
+            <td class="td-label">Link</td>
+            <td>
+                <input class="form-control" type="text" maxlength="200"
+                       @bind="item.Link" placeholder="Link" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br />
+                <input class="btn btn-primary" type="submit" value="Update" @onclick="Save" />
+                <input class="btn btn-danger" type="button" value="Cancel" @onclick="Cancel" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+<p class="alert-info">@echo</p>
+
 @code {
     [Parameter] public string id { get; set; }
     [Parameter] public string partition { get; set; }
@@ -39,54 +91,3 @@
 
     protected void Cancel() => _navigation.NavigateTo("/Books");
 }
-
-<h1 style="color:darkgoldenrod">Art Gallery</h1>
-<h3><span class="oi oi-item"></span> Book Editor</h3>
-<EditForm Model="@item">
-    <table class="table">
-        <tr>
-            <td>Title</td>
-            <td>
-                <input class="form-control col-sm-4" type="text" maxlength="200"
-                       @bind="item.Title" />
-            </td>
-        </tr>
-        <tr>
-            <td>Author</td>
-            <td>
-                <input class="form-control col-sm-4" type="text" maxlength="50"
-                       @bind="item.Author" />
-            </td>
-        </tr>
-        <tr>
-            <td>ISBN</td>
-            <td>
-                <input class="form-control col-sm-4" type="text" maxlength="14"
-                       @bind="item.ISBN" placeholder="Leave empty for random" />
-            </td>
-        </tr>
-        <tr>
-            <td>Language</td>
-            <td>
-                <input class="form-control col-sm-4" type="text" maxlength="20"
-                       @bind="item.Language" placeholder="Set the book language" />
-            </td>
-        </tr>
-        <tr>
-            <td>Link</td>
-            <td>
-                <input class="form-control col-sm-4" type="text" maxlength="200"
-                       @bind="item.Link" placeholder="Link" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <br />
-                <input class="btn btn-primary" type="submit" value="Update" @onclick="Save" />
-                <input class="btn btn-danger" type="button" value="Cancel" @onclick="Cancel" />
-            </td>
-        </tr>
-    </table>
-</EditForm>
-
-<p class="alert-info">@echo</p>

@@ -5,11 +5,15 @@
 
 <h3 style="color:darkgoldenrod">Books Collection</h3>
 <hr />
+<p>A collection of Book objects fetched from a Cosmos DB database</p>
+<div>
+    <a href="BookEditor" style="font-size:16px;"><i class="oi oi-book"></i> Add Book</a>
+</div>
 @if (items == null) {
     <h6>@echo</h6>
 }
 else {
-    <table class="table">
+    <table class="table" style="font-family:Consolas">
         <thead>
             <tr>
                 <td>Title</td>
@@ -22,22 +26,22 @@ else {
         </thead>
         <tbody>
             @foreach (var b in items) {
-            <tr>
-                <td>@b.Title</td>
-                <td>@b.Author</td>
-                <td>@b.Language</td>
-                <td>@b.Year</td>
-                <td>
-                    <span style="@LinkStyle(b.Link);"
-                          @onclick="() => OpenLink(b.Link)">Moore...</span>
-                </td>
-                <td nowrap>
-                    <span style="cursor:pointer;color:goldenrod"
-                          @onclick="@(e => OnEdit(b.ISBN, b.Partition))" class="oi oi-pencil"></span>
-                    <span style="cursor:pointer;color:salmon"
-                          @onclick="@(e => OnDelete(b.ISBN))" class="oi oi-trash"></span>
-                </td>
-            </tr>
+                <tr>
+                    <td>@b.Title</td>
+                    <td>@b.Author</td>
+                    <td>@b.Language</td>
+                    <td>@b.Year</td>
+                    <td>
+                        <span style="@LinkStyle(b.Link);"
+                              @onclick="() => OpenLink(b.Link)">More...</span>
+                    </td>
+                    <td nowrap>
+                        <span style="cursor:pointer;color:goldenrod"
+                              @onclick="@(e => OnEdit(b.ISBN, b.Partition))" class="oi oi-pencil"></span>
+                        <span style="cursor:pointer;color:salmon"
+                              @onclick="@(e => OnDelete(b.ISBN))" class="oi oi-trash"></span>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
@@ -47,9 +51,8 @@ else {
             Add Data Sample
         </h6>
     }
-    <hr />
-    <a href="BookEditor" style="font-size:16px;"><i class="oi oi-book"></i> Add Book</a>
 }
+<br />
 
 @code {
     List<Book> items;

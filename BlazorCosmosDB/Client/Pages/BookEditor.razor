@@ -38,6 +38,14 @@
             </td>
         </tr>
         <tr>
+            <td class="td-label">Year</td>
+            <td>
+                <input class="form-control" type="number" 
+                       min="-2000" max="@DateTime.Today.Year"
+                       @bind="item.Year" />
+            </td>
+        </tr>
+        <tr>
             <td class="td-label">Link</td>
             <td>
                 <input class="form-control" type="text" maxlength="200"

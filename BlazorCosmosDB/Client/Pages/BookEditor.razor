@@ -50,19 +50,22 @@
         <tr>
             <td>Title</td>
             <td>
-                <input class="form-control col-sm-4" type="text" @bind="item.Title" />
+                <input class="form-control col-sm-4" type="text" 
+                       @bind="item.Title" />
             </td>
         </tr>
         <tr>
             <td>Author</td>
             <td>
-                <input class="form-control col-sm-4" type="text" @bind="item.Author" />
+                <input class="form-control col-sm-4" type="text" 
+                       @bind="item.Author" />
             </td>
         </tr>
         <tr>
             <td>ISBN</td>
             <td>
-                <input class="form-control col-sm-4" type="text" @bind="item.ISBN" placeholder="Leave empty for random" />
+                <input class="form-control col-sm-4" type="text" 
+                       @bind="item.ISBN" placeholder="Leave empty for random" />
             </td>
         </tr>
         <tr>
@@ -74,4 +77,5 @@
         </tr>
     </table>
 </EditForm>
+
 <p class="alert-info">@echo</p>

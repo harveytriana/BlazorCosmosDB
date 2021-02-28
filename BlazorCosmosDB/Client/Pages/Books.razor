@@ -1,6 +1,7 @@
 ﻿@page "/fetch-books"
 @inject HttpClient _http
 @inject NavigationManager _navigation
+@inject IJSRuntime _jsRuntime
 
 <h1 style="color:darkgoldenrod">Art Gallery</h1>
 <h3><span class="oi oi-book"></span> Books</h3>
@@ -28,11 +29,15 @@ else {
                     <td>@i.ISBN</td>
                     <td>@i.Language</td>
                     <td>@i.Year</td>
-                    <td>@i.Link</td>
+                    <td>
+                        @i.Link
+                        <span style="cursor:pointer;color:@LinkColor(i.Link);"
+                              @onclick="() => Go(i.Link)">Moore...</span>
+                    </td>
                     <td nowrap>
-                        <span style="cursor:pointer;color:goldenrod" 
+                        <span style="cursor:pointer;color:goldenrod"
                               @onclick="@(e => OnEdit(i.ISBN))" class="oi oi-pencil"></span>
-                        <span style="cursor:pointer;color:salmon" 
+                        <span style="cursor:pointer;color:salmon"
                               @onclick="@(e => OnDelete(i.ISBN))" class="oi oi-trash"></span>
                     </td>
                 </tr>
@@ -45,9 +50,9 @@ else {
 }
 
 @code {
-    List<Book> items;
-    string apiRoot = "api/books/";
-    string echo;
+        List<Book> items;
+        string apiRoot = "api/books/";
+        string echo;
 
     protected override async Task OnInitializedAsync()
     {
@@ -70,4 +75,13 @@ else {
         // update database
         await _http.DeleteAsync($"api/book/{id}");
     }
+
+    async Task Go(string link)
+    {
+        if (string.IsNullOrEmpty(link) == false) {
+            await _jsRuntime.InvokeVoidAsync("open", link, "_blank");
+        } 
+    }
+
+    string LinkColor(string link) => link == null ? "gray" : "darkgoldenrod";
 }

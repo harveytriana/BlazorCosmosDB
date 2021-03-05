@@ -37,9 +37,11 @@ else {
                     </td>
                     <td nowrap>
                         <span style="cursor:pointer;color:goldenrod"
-                              @onclick="@(e => OnEdit(b.ISBN, b.Partition))" class="oi oi-pencil"></span>
+                              @onclick="@(e => OnEdit(b.ISBN, b.Partition))" 
+                              class="oi oi-pencil"></span>
                         <span style="cursor:pointer;color:salmon"
-                              @onclick="@(e => OnDelete(b.ISBN))" class="oi oi-trash"></span>
+                              @onclick="@(e => OnDelete(b.ISBN))" 
+                              class="oi oi-trash"></span>
                     </td>
                 </tr>
             }

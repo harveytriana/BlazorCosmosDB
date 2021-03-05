@@ -33,7 +33,11 @@ namespace BlazorCosmosDB.Client
 
         public static string NewISBN()
         {
-            return $"{RandomString(1)}-{RandomString(5, false)}-{RandomString(3)}-{RandomString(1)}";
+            return 
+                RandomString(1) + "-" + 
+                RandomString(5, false) + "-" + 
+                RandomString(3) + "-" + 
+                RandomString(1);
         }
 
         public static async Task<bool> ResponseResult(HttpResponseMessage response)

@@ -13,6 +13,7 @@ namespace BlazorCosmosDB.Server
 {
     public class Startup
     {
+        // for static files
         public static string PATH { get; private set; }
 
         public Startup(IConfiguration configuration)

@@ -60,7 +60,7 @@ namespace BlazorCosmosDB.Server.Controllers
         [HttpGet("SeedData")]
         public async Task<IEnumerable<Book>> GetSeedData()
         {
-            return await SeedData.GetBooksData(_cosmos);
+            return await SeedData.GetDataSample(_cosmos);
         }
 
     }

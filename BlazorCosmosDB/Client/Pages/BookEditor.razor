@@ -55,8 +55,12 @@
         <tr>
             <td colspan="2">
                 <br />
-                <input class="btn btn-primary" type="button" value="Update" @onclick="Save" />
-                <input class="btn btn-danger" type="button" value="Cancel" @onclick="Cancel" />
+                <input class="btn btn-primary" 
+                       type="button" value="Update" 
+                       @onclick="Save" />
+                <input class="btn btn-danger" 
+                       type="button" value="Cancel" 
+                       @onclick="Cancel" />
             </td>
         </tr>
     </table>
@@ -95,7 +99,6 @@
         }
         if (await Utils.ResponseResult(response) == true) {
             _navigation.NavigateTo("/Books");
-            echo = "READY";
         }
         else {
             echo = "The operation was not completed";

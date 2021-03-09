@@ -48,10 +48,13 @@ else {
         </tbody>
     </table>
     if (items.Count == 0) {
-        <h6 style="cursor:pointer;color:goldenrod"
-            @onclick="@SeedData" class="oi oi-pencil">
-            Add Data Sample
-        </h6>
+        <h5>
+            <a href="#"
+               @onclick="@SeedData"
+               @onclick:preventDefault="true">
+                <i class="oi oi-data-transfer-upload" aria-hidden="true"></i> Add data sample
+            </a>
+        </h5>
     }
 }
 <br />

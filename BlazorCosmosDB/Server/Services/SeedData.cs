@@ -11,17 +11,17 @@ namespace BlazorCosmosDB.Server.Services
 {
     public static class SeedData
     {
-        public static async Task<List<Book>> GetBooksData(ICosmosService<Book> _service)
+        public static async Task<List<T>> GetDataSample<T>(ICosmosService<T> _service)
         {
-            var file = $"{Startup.PATH}/Statics/Book_SEED.json";
+            var file = $"{Startup.PATH}/Statics/{typeof(T).Name}_SEED.json";
             if (File.Exists(file)) {
-                var data = JsonSerializer.Deserialize<List<Book>>(File.ReadAllText(file));
-                foreach (Book item in data) {
+                var data = JsonSerializer.Deserialize<List<T>>(File.ReadAllText(file));
+                foreach (T item in data) {
                     await _service.AddItemAsync(item);
                 }
                 return data;
             }
-            return new List<Book>();
+            return new List<T>();
         }
     }
 }

@@ -29,6 +29,7 @@ namespace BlazorCosmosDB.Server
             services.AddRazorPages();
 
             // cosmos db services
+            //! Warning. Error if CosmoDB Emulator is stoped
             services.AddSingleton<ICosmosService<Book>>(DatabaseInitializer.Initialize<Book>(Configuration).GetAwaiter().GetResult());
             // other entities has the same pattern, except the type..
         }

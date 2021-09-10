@@ -12,3 +12,4 @@ This article is published in [Blazor Spread Blog]
 - [Sapnish](https://www.blazorspread.net/blogview/blazor-y-azure-cosmosdb)
 - [German](https://www.blazorspread.net/blogview/blazor-und-azure-cosmosdb)
 
+P.S. *If this publication was useful, please, do not forget to mark a star, I appreciate it.*
